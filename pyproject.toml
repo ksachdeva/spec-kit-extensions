@@ -1,73 +1,51 @@
-[project]
-name = "python-template"
-version = "0.0.1"
-description = "Template for Python projects"
-readme = "README.md"
-authors = [
-    { name = "Sachdeva, Kapil"}
-]
-requires-python = ">=3.11"
-dependencies = [
-]
-
-classifiers = [
-  "Intended Audience :: Developers",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
-  "Programming Language :: Python :: 3.14",
-  "Operating System :: OS Independent",
-  "Topic :: Software Development :: Libraries :: Python Modules",
-  "License :: OSI Approved :: Apache Software License",
-]
-
-[project.urls]
-repository = "https://github.com/ksachdeva/python-template"
-
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [dependency-groups]
 dev = [
-    "pytest>=8.3.3",
-    "pytest-asyncio>=0.24.0",
-    "pytest-xdist>=3.6.1",
-    "pytest-mock>=3.14.0",
-    "poethepoet>=0.30.0",
-    "packaging>=24.2",
-    "pyright>=1.1.378",
-    "mypy>=1.10.0",
-    "ruff>=0.4.8",
-    "pre-commit>=4.3.0"
+    "debugpy>=1.8",
+    "mypy>=2.1.0",
+    "poethepoet>=0.48.0",
+    "pre-commit>=4.6.0",
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.3.0",
+    "pytest-env>=1.6.0",
+    "types-PyYAML>=6.0.3",
 ]
 
+[tool.uv.workspace]
+members = [
+]
+
+[tool.uv.sources]
+
 [tool.ruff]
-line-length = 120
+line-length = 88
 fix = true
-target-version = "py311"
+target-version = "py314"
+
+[tool.ruff.lint]
+ignore = ["D100", "D101", "D102", "D103", "D104", "D106", "D107"]
+extend-select = ["I"]
+
+[tool.ruff.lint.flake8-annotations]
+allow-star-arg-any = true
+
+[tool.ruff.lint.flake8-type-checking]
+runtime-evaluated-base-classes = [
+    "pydantic.BaseModel"
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/*" = ["S101", "PLR2004"]
 
 [tool.ruff.format]
 docstring-code-format = true
 
-[tool.ruff.lint]
-select = ["E", "F", "W", "B", "Q", "I", "ASYNC", "T20"]
-ignore = ["F401", "E501"]
-
-[tool.ruff.lint.flake8-tidy-imports]
-[tool.ruff.lint.flake8-tidy-imports.banned-api]
-"unittest".msg = "Use `pytest` instead."
-
-[tool.ruff.flake8-bugbear]
-extend-immutable-calls = ["fastapi.Depends", "fastapi.params.Depends", "fastapi.Query", "fastapi.params.Query"]
-
 [tool.mypy]
 strict = true
-python_version = "3.11"
+python_version = "3.14"
 ignore_missing_imports = true
+plugins = [
+    "pydantic.mypy"
+]
 
 # from https://blog.wolt.com/engineering/2021/09/30/professional-grade-mypy-configuration/
 disallow_untyped_defs = true
@@ -81,12 +59,12 @@ disallow_incomplete_defs = true
 disallow_untyped_decorators = true
 disallow_any_unimported = false
 
-[tool.pyright]
-include = ["src", "tests", "samples"]
-# typeCheckingMode = "strict"
-reportUnnecessaryIsInstance = false
-reportMissingTypeStubs = false
-exclude = []
-
 [tool.poe]
-include = "poe.toml"
+include = [
+   "poe.toml"
+]
+
+[tool.uv]
+override-dependencies = [
+]
+exclude-newer = "3 days"

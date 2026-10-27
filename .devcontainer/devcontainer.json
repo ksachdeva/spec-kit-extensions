@@ -1,15 +1,21 @@
 {
-  "name": "python-template",
+  "name": "spec-kit-egm",
   "dockerFile": "Dockerfile",
   "containerEnv": {
     "LANG": "en_US.UTF-8",
     "NODE_EXTRA_CA_CERTS": "/usr/local/share/ca-certificates/cloudflare.crt",
-    "APP_HOST_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
-    "APP_DEV_CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}"
+    "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt",
+    "CURL_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt",
+    "PYTHONPYCACHEPREFIX": "/workspaces/.pycache",
+    "EGM_HOST_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
+    "EGM_DEV_CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}"
   },
   "remoteEnv": {
+    "UV_CACHE_DIR": "/tmp/egm-uv-cache",
     "UV_LINK_MODE": "copy",
-    "UV_SYSTEM_CERTS": "true"
+    "UV_SYSTEM_CERTS": "true",
+    "UV_MALWARE_CHECK": "1",
+    "UV_PREVIEW_FEATURES": "malware-check,format"
   },
   "runArgs": [
     "--add-host=host.docker.internal:host-gateway"
@@ -56,26 +62,22 @@
     }
   },
   "features": {
-    "ghcr.io/devcontainers/features/common-utils:2": {
+    "ghcr.io/devcontainers/features/common-utils:2.7.1": {
       "installOhMyZshConfig": false,
       "configureZshAsDefaultShell": true
     },
     // Node
-    "ghcr.io/devcontainers/features/node:2.0.0": {
-      "version": "lts"
+    "ghcr.io/devcontainers/features/node:2.1.1": {
+      "version": "lts",
+      "pnpmVersion": "latest"
     },
-    // TypeScript
     "ghcr.io/devcontainers-extra/features/typescript:2": {},
-    // ts-node
     "ghcr.io/devcontainers-extra/features/ts-node:1": {},
-    // Modern shell utils
-    "ghcr.io/mikaello/devcontainer-features/modern-shell-utils:2.0.0": {},
-    // uv
-    "ghcr.io/jsburckhardt/devcontainer-features/uv:1": {},
-    // docker-in-docker
-    "ghcr.io/devcontainers/features/docker-in-docker:3.0.1": {
+    "ghcr.io/mikaello/devcontainer-features/modern-shell-utils:3.0.0": {},
+    "ghcr.io/devcontainers-extra/features/uv:1": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1.10.1": {
       "moby": false
-    }
+    },
   },
   "mounts": [
     "source=devcontainer-zshhistory,target=/commandhistory,type=volume"
