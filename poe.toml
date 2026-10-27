@@ -1,0 +1,3 @@
+[tool.poe.tasks]
+fmt = "uv format --preview-features format"
+pre-commit = "uv run pre-commit run --all--files"
