@@ -8,7 +8,10 @@
     "CURL_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt",
     "PYTHONPYCACHEPREFIX": "/workspaces/.pycache",
     "EGM_HOST_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
-    "EGM_DEV_CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}"
+    "EGM_DEV_CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}",
+    "AZURE_OPENAI_API_KEY": "${localEnv:DEVCONTAINER_AZURE_OPENAI_API_KEY}",
+    "AZURE_RESOURCE": "${localEnv:DEVCONTAINER_AZURE_RESOURCE}",
+    "OPENCODE_DB": "/opencode-storage/opencode.db"
   },
   "remoteEnv": {
     "UV_CACHE_DIR": "/tmp/egm-uv-cache",
@@ -66,9 +69,8 @@
       "installOhMyZshConfig": false,
       "configureZshAsDefaultShell": true
     },
-    // Node
-    "ghcr.io/devcontainers/features/node:2.1.1": {
-      "version": "lts",
+    "ghcr.io/devcontainers/features/node:2": {
+      "version": "24",
       "pnpmVersion": "latest"
     },
     "ghcr.io/devcontainers-extra/features/typescript:2": {},
@@ -77,10 +79,12 @@
     "ghcr.io/devcontainers-extra/features/uv:1": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1.10.1": {
       "moby": false
-    },
+    }
   },
   "mounts": [
-    "source=devcontainer-zshhistory,target=/commandhistory,type=volume"
+    "source=devcontainer-zshhistory,target=/commandhistory,type=volume",
+    "source=devcontainer-copilot,target=/home/vscode/.copilot,type=volume",
+    "source=devcontainer-opencode,target=/opencode-storage,type=volume"
   ],
   "postCreateCommand": ["bash", ".devcontainer/scripts/post-create.sh"]
 }
