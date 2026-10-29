@@ -1,3 +1,12 @@
 [tool.poe.tasks]
 fmt = "uv format --preview-features format"
 pre-commit = "uv run pre-commit run --all--files"
+
+[tool.poe.tasks.specify-demo]
+env = { SPECIFY_INIT_DIR = "examples/demo-app" }
+cmd = "uv run specify"
+
+[tool.poe.tasks.copilot-demo]
+env = { SPECIFY_INIT_DIR = "examples/demo-app" }
+cwd = "examples/demo-app"
+cmd = "copilot"
