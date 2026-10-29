@@ -1,1 +1,1 @@
-# SpecKit EGM
+# SpecKit Extensions

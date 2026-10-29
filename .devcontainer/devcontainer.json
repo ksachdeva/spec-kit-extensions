@@ -1,5 +1,5 @@
 {
-  "name": "spec-kit-egm",
+  "name": "spec-kit-extensions",
   "dockerFile": "Dockerfile",
   "containerEnv": {
     "LANG": "en_US.UTF-8",
@@ -7,14 +7,14 @@
     "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt",
     "CURL_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt",
     "PYTHONPYCACHEPREFIX": "/workspaces/.pycache",
-    "EGM_HOST_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
-    "EGM_DEV_CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}",
+    "EXT_HOST_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
+    "EXT_DEV_CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}",
     "AZURE_OPENAI_API_KEY": "${localEnv:DEVCONTAINER_AZURE_OPENAI_API_KEY}",
     "AZURE_RESOURCE": "${localEnv:DEVCONTAINER_AZURE_RESOURCE}",
     "OPENCODE_DB": "/opencode-storage/opencode.db"
   },
   "remoteEnv": {
-    "UV_CACHE_DIR": "/tmp/egm-uv-cache",
+    "UV_CACHE_DIR": "/tmp/spec-kit-extensions-uv-cache",
     "UV_LINK_MODE": "copy",
     "UV_SYSTEM_CERTS": "true",
     "UV_MALWARE_CHECK": "1",
