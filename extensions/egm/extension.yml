@@ -1,0 +1,31 @@
+schema_version: "1.0"
+
+extension:
+  id: egm
+  name: "Elephant-Goldfish Model"
+  version: "1.0.1"
+  description: "Design with an elephant. Review with a goldfish."
+  category: "process"
+  effect: "read-write"
+  author: Kapil Sachdeva
+  repository: https://github.com/ksachdeva/spec-kit-egm
+  license: MIT
+
+requires:
+  speckit_version: ">=0.9.0"
+
+provides:
+  commands:
+    - name: speckit.egm.brainstorm
+      file: commands/speckit.egm.brainstorm.md
+      description: "Interactive ideation and brainstorming for the Elephant & Goldfish Model (EGM)"
+    - name: speckit.egm.draft
+      file: commands/speckit.egm.draft.md
+      description: "Draft a design for the Elephant & Goldfish Model (EGM)"
+
+tags:
+  - "assessment"
+  - "discovery"
+  - "triage"
+  - "product"
+  - "workflow"
