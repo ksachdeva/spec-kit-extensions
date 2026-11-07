@@ -2,11 +2,21 @@
 fmt = "uv format --preview-features format"
 pre-commit = "uv run pre-commit run --all--files"
 
-[tool.poe.tasks.specify-demo]
-env = { SPECIFY_INIT_DIR = "examples/demo-app" }
-cmd = "uv run specify"
+[tool.poe.groups.opencode]
+heading = "SpecKit Opencode"
 
-[tool.poe.tasks.copilot-demo]
+[tool.poe.groups.opencode.tasks.opencode-demo-init]
+cmd = "uv run specify init examples/demo-app --integration opencode"
+
+[tool.poe.groups.opencode.tasks.opencode-demo-add-egm]
+env = { SPECIFY_INIT_DIR = "examples/demo-app" }
+sequence = [
+     {cmd = "uv run specify extension add --dev ${POE_GIT_ROOT}/extensions/egm --force" },
+     {cmd = "uv run specify preset remove egm-opencode-subagents" },
+     {cmd = "uv run specify preset add --dev ${POE_GIT_ROOT}/presets/egm-opencode-subagents" }
+]
+
+[tool.poe.groups.opencode.tasks.opencode-demo-run]
 env = { SPECIFY_INIT_DIR = "examples/demo-app" }
 cwd = "examples/demo-app"
-cmd = "copilot"
+cmd = "opencode"

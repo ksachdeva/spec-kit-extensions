@@ -1,5 +1,6 @@
 {
     "$schema": "https://opencode.ai/config.json",
+    "model": "my-azure/gpt-6-luna",
     "providers": {
         "host-ollama": {
             "package": "@ai-sdk/openai-compatible",
