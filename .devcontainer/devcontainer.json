@@ -11,7 +11,9 @@
     "EXT_DEV_CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}",
     "AZURE_OPENAI_API_KEY": "${localEnv:DEVCONTAINER_AZURE_OPENAI_API_KEY}",
     "AZURE_RESOURCE": "${localEnv:DEVCONTAINER_AZURE_RESOURCE}",
-    "OPENCODE_DB": "/opencode-storage/opencode.db"
+    "OPENCODE_DB": "/opencode-storage/opencode.db",
+    "HOST_SSH_PUBLIC_KEY": "${localEnv:DEVCONTAINER_SSH_PUBLIC_KEY}",
+    "SSH_WORKSPACE": "/workspaces/spec-kit-extensions"
   },
   "remoteEnv": {
     "UV_CACHE_DIR": "/tmp/spec-kit-extensions-uv-cache",
@@ -21,7 +23,8 @@
     "UV_PREVIEW_FEATURES": "malware-check,format"
   },
   "runArgs": [
-    "--add-host=host.docker.internal:host-gateway"
+    "--add-host=host.docker.internal:host-gateway",
+    "--name=spec-kit-extensions"
   ],
   "customizations": {
     "vscode": {
@@ -33,7 +36,9 @@
           "editor.defaultFormatter": "charliermarsh.ruff",
           "testing.unittestEnabled": false,
           "testing.pytestEnabled": true,
-          "testing.pytestArgs": ["tests"],
+          "testing.pytestArgs": [
+            "tests"
+          ],
           "defaultInterpreterPath": "./venv/bin/python"
         },
         "python.terminal.activateEnvironment": false,
@@ -79,12 +84,17 @@
     "ghcr.io/devcontainers-extra/features/uv:1": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1.10.1": {
       "moby": false
-    }
+    },
+    "ghcr.io/devcontainers/features/sshd:1": {}
   },
   "mounts": [
     "source=devcontainer-zshhistory,target=/commandhistory,type=volume",
     "source=devcontainer-copilot,target=/home/vscode/.copilot,type=volume",
-    "source=devcontainer-opencode,target=/opencode-storage,type=volume"
+    "source=devcontainer-opencode,target=/opencode-storage,type=volume",
+    "source=${localWorkspaceFolderBasename}-ssh-host-keys,target=/ssh-host-keys,type=volume"
   ],
-  "postCreateCommand": ["bash", ".devcontainer/scripts/post-create.sh"]
+  "postCreateCommand": [
+    "bash",
+    ".devcontainer/scripts/post-create.sh"
+  ]
 }

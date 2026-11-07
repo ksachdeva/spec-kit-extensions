@@ -1,8 +1,0 @@
-command-history-state.json
-config.json
-open-sessions-state.json
-permissions-config.json
-session-state
-session-store.db
-settings.json
-sidebar-sessions-state

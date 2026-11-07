@@ -16,10 +16,9 @@ SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.
 echo "$SNIPPET" >> "/home/$USERNAME/.zshrc"
 
 bash "$SCRIPTS_DIR"/poe.sh
-bash "$SCRIPTS_DIR"/cloudflare-trust.sh
 bash "$SCRIPTS_DIR"/docker-completion.sh
 bash "$SCRIPTS_DIR"/uv.sh
-bash "$SCRIPTS_DIR"/agents.sh
+bash "$SCRIPTS_DIR"/tools.sh
 
 echo "install pre-commit hooks ..."
 uv run pre-commit install
