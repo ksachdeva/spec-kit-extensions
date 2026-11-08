@@ -1,0 +1,3 @@
+[submodule "submodules/elephant-goldfish-model"]
+	path = submodules/elephant-goldfish-model
+	url = https://github.com/google/elephant-goldfish-model.git
