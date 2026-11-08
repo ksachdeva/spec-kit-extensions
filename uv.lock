@@ -19,7 +19,7 @@ dev = [
     { name = "pytest", specifier = ">=9.0.3" },
     { name = "pytest-asyncio", specifier = ">=1.3.0" },
     { name = "pytest-env", specifier = ">=1.6.0" },
-    { name = "specify-cli", specifier = ">=1.2.3" },
+    { name = "specify-cli", specifier = ">=1.3.0" },
     { name = "types-pyyaml", specifier = ">=6.0.3" },
 ]
 
@@ -437,6 +437,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/19/74/a633ee74eb36c44aa6d1095e7cc5569bebf04342ee146178e2d36600708b/jsonschema_specifications-2025.9.1.tar.gz", hash = "sha256:b540987f239e745613c7a9176f3edb72b832a4ac465cf02712288397832b5e8d", size = 32855, upload-time = "2025-09-08T01:34:59.186Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl", hash = "sha256:98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe", size = 18437, upload-time = "2025-09-08T01:34:57.871Z" },
+]
+
+[[package]]
+name = "lark"
+version = "1.3.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/da/34/28fff3ab31ccff1fd4f6c7c7b0ceb2b6968d8ea4950663eadcb5720591a0/lark-1.3.1.tar.gz", hash = "sha256:b426a7a6d6d53189d318f2b6236ab5d6429eaf09259f1ca33eb716eed10d2905", size = 382732, upload-time = "2025-10-27T18:25:56.653Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/82/3d/14ce75ef66813643812f3093ab17e46d3a206942ce7376d31ec2d36229e7/lark-1.3.1-py3-none-any.whl", hash = "sha256:c629b661023a014c37da873b4ff58a817398d12635d3bbb2c5a03be7fe5d1e12", size = 113151, upload-time = "2025-10-27T18:25:54.882Z" },
 ]
 
 [[package]]
@@ -1003,11 +1012,12 @@ wheels = [
 
 [[package]]
 name = "specify-cli"
-version = "1.2.3"
+version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
     { name = "json5" },
+    { name = "lark" },
     { name = "mcp" },
     { name = "packaging" },
     { name = "pathspec" },
@@ -1017,9 +1027,9 @@ dependencies = [
     { name = "rich" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5d/5a/8ebd40d4066994f110c7cf7b11eb705f9a4660a65ff3275288542c3402dc/specify_cli-1.2.3.tar.gz", hash = "sha256:e970ad55f15857c0aef73af7885022cf8129f9d9795363d90837e1e4b8919f60", size = 5086795, upload-time = "2026-10-22T13:36:24.774Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b7/76/b2517ad95e33576a4b37850838c49f7fc69ca1fe3aa465ce629edd22bf8b/specify_cli-1.3.0.tar.gz", hash = "sha256:2d59601fd10b5d65c5064091a1efec67c25265569d2c12323ec444d44b6f31a8", size = 5230676, upload-time = "2026-11-03T18:26:35.732Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/91/cc/bda35ea41a7b27fed441bc77570dc0e71b48b9c8ce6c093ff27dbfe7d538/specify_cli-1.2.3-py3-none-any.whl", hash = "sha256:945ad1cdfddf3e5cf138259827564af4b41c4ade053e16a4222f1589248d0eaa", size = 1165128, upload-time = "2026-10-22T13:36:23.403Z" },
+    { url = "https://files.pythonhosted.org/packages/aa/10/492f19c59c0ba1b0595f16ff0f40ee2f34eee7c618e798d118b817e2bca3/specify_cli-1.3.0-py3-none-any.whl", hash = "sha256:1a351572e292236cb2da8329598576294c033d4c71a49dbac29840999c8b629d", size = 1203918, upload-time = "2026-11-03T18:26:34.021Z" },
 ]
 
 [[package]]
