@@ -3,8 +3,8 @@ name: Release Spec Kit component
 on:
   push:
     tags:
-      - "extensions-*-v*"
-      - "presets-*-v*"
+      - "extension-*-v*"
+      - "preset-*-v*"
 
 permissions:
   contents: write
@@ -41,8 +41,8 @@ jobs:
 
           tag = os.environ["RELEASE_TAG"]
           prefixes = {
-              "extensions-": ("extension", "extensions", "extension.yml"),
-              "presets-": ("preset", "presets", "preset.yml"),
+              "extension-": ("extension", "extensions", "extension.yml"),
+              "preset-": ("preset", "presets", "preset.yml"),
           }
           for prefix, (kind, package_root, manifest_name) in prefixes.items():
               if tag.startswith(prefix):
@@ -50,7 +50,7 @@ jobs:
                   break
           else:
               raise SystemExit(
-                  f"Tag {tag!r} must begin with 'extensions-' or 'presets-'"
+                  f"Tag {tag!r} must begin with 'extension-' or 'preset-'"
               )
 
           if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", component_id):

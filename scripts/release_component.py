@@ -57,11 +57,7 @@ def release_component(
             f"Manifest version {component.get('version')!r} does not match {version!r}"
         )
 
-    tag = f"{package_root}-{component_id}-v{version}"
-    if _dry_run:
-        print(f"Would create and push {tag}; GitHub Actions will publish the release.")
-        return
-
+    tag = f"{kind}-{component_id}-v{version}"
     if git("status", "--porcelain", "--untracked-files=all"):
         raise SystemExit("Commit or discard all working-tree changes before releasing.")
 
@@ -69,6 +65,10 @@ def release_component(
         raise SystemExit(f"Local tag {tag!r} already exists.")
     if git("ls-remote", "--tags", "origin", f"refs/tags/{tag}"):
         raise SystemExit(f"Remote tag {tag!r} already exists.")
+
+    if _dry_run:
+        print(f"Would create and push {tag}; GitHub Actions will publish the release.")
+        return
 
     git(
         "tag",
