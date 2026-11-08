@@ -7,9 +7,9 @@ extension:
   description: "Design with an elephant. Review with a goldfish."
   category: "process"
   effect: "read-write"
-  author: Kapil Sachdeva
-  repository: https://github.com/ksachdeva/spec-kit-egm
-  license: MIT
+  author: "Kapil Sachdeva"
+  repository: "https://github.com/ksachdeva/spec-kit-extensions"
+  license: "MIT"
 
 requires:
   speckit_version: ">=0.9.0"
