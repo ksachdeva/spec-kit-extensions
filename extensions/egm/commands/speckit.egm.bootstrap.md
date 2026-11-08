@@ -407,16 +407,14 @@ If your harness has no subagent tool, run the scout steps inline.
         contract updates to check for consistency with the codebase?"
     *   `options`: `["(Recommended) Yes, run drift report on modified contracts",
         "No, skip drift review"]`
-    *   If the user selects "Yes" and the `egm-drift-report` skill is available
-        in the environment, run it targeting
+    *   If the user selects "Yes", run `__SPECKIT_COMMAND_EGM_DRIFT-REPORT__`
+        targeting
         the modified contracts to verify both missing code coverage and
         doc-to-code hallucinations (verifying every documented method, route,
         enum, database table, and invariant against local source files and
         recording discrepancies in the drift report for human triage). (Note:
         While `egm-drift-report` is often used for design documents, it can be
         applied to EGM-compliant contracts as a variant).
-    *   If it is not available, explain that the drift-report skill has not been
-        ported to this extension.
 
 6.  Terminate execution successfully.
 

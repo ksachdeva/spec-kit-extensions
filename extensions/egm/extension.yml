@@ -3,7 +3,7 @@ schema_version: "1.0"
 extension:
   id: egm
   name: "Elephant-Goldfish Model"
-  version: "1.1.0"
+  version: "1.2.0"
   description: "Design with an elephant. Review with a goldfish."
   category: "process"
   effect: "read-write"
@@ -25,6 +25,9 @@ provides:
     - name: speckit.egm.bootstrap
       file: commands/speckit.egm.bootstrap.md
       description: "Bootstrap EGM Peanuts and Hay README contracts across a repository subtree"
+    - name: speckit.egm.drift-report
+      file: commands/speckit.egm.drift-report.md
+      description: "Detect and report drift between design documents or READMEs and source code"
 
 tags:
   - "assessment"
