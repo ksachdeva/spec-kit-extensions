@@ -23,6 +23,9 @@ The current workflow mapping is:
 | `skills/egm-draft/SKILL.md` | `extensions/egm/commands/speckit.egm.draft.md` |
 | `skills/egm-bootstrap/SKILL.md` | `extensions/egm/commands/speckit.egm.bootstrap.md` |
 | `skills/egm-drift-report/SKILL.md` | `extensions/egm/commands/speckit.egm.drift-report.md` |
+| `skills/egm-resolve/SKILL.md` | `extensions/egm/commands/speckit.egm.resolve.md` |
+| `skills/egm-review-loop/SKILL.md` | `extensions/egm/commands/speckit.egm.review-loop.md` |
+| `skills/egm-review/SKILL.md` | `extensions/egm/commands/speckit.egm.review.md` |
 | `skills/egm-bootstrap/references/templates.md` | `extensions/egm/resources/egm-bootstrap/templates.md` |
 | `skills/egm-bootstrap/references/worker-return.schema.json` | `extensions/egm/resources/egm-bootstrap/worker-return.schema.json` |
 | `agents/<persona>.md` | `extensions/egm/agents/<persona>.md` |

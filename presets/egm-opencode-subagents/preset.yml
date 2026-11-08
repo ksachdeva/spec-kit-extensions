@@ -3,7 +3,7 @@ schema_version: "1.0"
 preset:
   id: "egm-opencode-subagents"
   name: "EGM OpenCode Sub-Agent Delegation"
-  version: "1.1.0"
+  version: "1.3.0"
   description: "Adds sub-agent delegation instructions to EGM Spec Kit workflow commands, enabling parallel execution of independent steps via OpenCode sub-agents."
   author: "Kapil Sachdeva"
   repository: "https://github.com/ksachdeva/spec-kit-extensions"
@@ -13,7 +13,7 @@ requires:
   speckit_version: ">=0.8.0"
   extensions:
     - id: egm
-      version: ">=1.1.0"
+      version: ">=1.5.0"
       required: true
 
 provides:
@@ -35,6 +35,18 @@ provides:
       file: "commands/sub-agent.md"
       description: "Prepend sub-agent delegation for bootstrapping"
       replaces: "speckit.egm.bootstrap"
+      strategy: "prepend"
+    - type: "command"
+      name: "speckit.egm.review-loop"
+      file: "commands/sub-agent.md"
+      description: "Prepend sub-agent delegation for review loops"
+      replaces: "speckit.egm.review-loop"
+      strategy: "prepend"
+    - type: "command"
+      name: "speckit.egm.review"
+      file: "commands/sub-agent.md"
+      description: "Prepend sub-agent delegation for reviews"
+      replaces: "speckit.egm.review"
       strategy: "prepend"
 
 tags:

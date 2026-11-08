@@ -3,7 +3,7 @@ schema_version: "1.0"
 extension:
   id: egm
   name: "Elephant-Goldfish Model"
-  version: "1.2.0"
+  version: "1.5.0"
   description: "Design with an elephant. Review with a goldfish."
   category: "process"
   effect: "read-write"
@@ -28,6 +28,15 @@ provides:
     - name: speckit.egm.drift-report
       file: commands/speckit.egm.drift-report.md
       description: "Detect and report drift between design documents or READMEs and source code"
+    - name: speckit.egm.resolve
+      file: commands/speckit.egm.resolve.md
+      description: "Evaluate Goldfish review findings and resolve them with the user"
+    - name: speckit.egm.review-loop
+      file: commands/speckit.egm.review-loop.md
+      description: "Orchestrate iterative Goldfish reviews and resolution"
+    - name: speckit.egm.review
+      file: commands/speckit.egm.review.md
+      description: "Run the EGM Goldfish review protocol and remediate approved findings"
 
 tags:
   - "assessment"
