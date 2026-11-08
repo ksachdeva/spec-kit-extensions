@@ -7,6 +7,7 @@ Read `.specify/extensions/egm/agents/<file>.md` where <file> will be replaced by
 | Subagent Persona | File Name |
 | --- | --- |
 | egm-codebase-details | codebase_details |
+| egm-bootstrap-orchestrator | bootstrap_orchestrator |
 | egm-comprehension | comprehension |
 | egm-design | design_critic |
 | egm-implementation-readiness | implementation_readiness |
