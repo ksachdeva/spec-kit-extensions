@@ -6,6 +6,12 @@ description: >-
   requirements + solution.
 ---
 
+## User Input
+
+```text
+$ARGUMENTS
+```
+
 # Design Drafting (Document Construction)
 
 This skill guides the user through drafting a technical design document based on
@@ -14,7 +20,8 @@ the aligned problem and requirements from the brainstorm phase.
 ## Execution Constraints (CRITICAL)
 
 1.  You **MUST** read and apply the
-    execution instructions in `resources/execution_instructions.md`.
+    execution instructions in
+    `.specify/extensions/egm/resources/execution_instructions.md`.
 2.  **Artifact-First Delivery (MANDATORY)**: You are **STRICTLY FORBIDDEN** from
     presenting large proposals, drafts, summaries, or plans directly in the chat
     pane. You **MUST** write them directly to the working directory (or your
@@ -54,12 +61,12 @@ the aligned problem and requirements from the brainstorm phase.
     strictly one question (`len(questions) == 1`), be the sole tool call in the
     turn, and provide clear, action-oriented options without `(Recommended)`
     prefixes.
-13. **Owner Decides Architecture**: When a design decision has more than one
+13. **Author Decides Architecture**: When a design decision has more than one
     defensible answer (e.g., data model, component boundaries, storage,
     protocols), present up to three options, each with its mechanism,
-    trade-offs, and the conditions under which it fails, and ask the owner to
+    trade-offs, and the conditions under which it fails, and ask the author to
     choose through a single-select gate. Do not rank the options, mark a
-    default, or pick one. If the owner asks you to choose ("just pick one"),
+    default, or pick one. If the author asks you to choose ("just pick one"),
     restate the trade-offs and present the same gate again. Decide mechanical
     choices with one defensible answer (e.g., file naming, formatting)
     yourself.
@@ -87,7 +94,7 @@ this strict generation order:
 1.  **Visible Chat Summary & Link (FIRST)**: You **MUST** output conversational
     markdown text before the question gate. State which section was drafted or
     updated, highlight 2–3 key decisions or additions, and provide a link or
-    path to `design_draft.md` (e.g., `[design draft](/absolute/project/design_draft.md)` in Codex).
+    path to `design_draft.md`.
 2.  **Approval Gate (SECOND)**: In the same turn, present the single-select
     approval choice (using a structured question tool such as `ask_question`
     with `len(questions) == 1` and `is_multi_select: false` if your harness has
@@ -145,14 +152,18 @@ this strict generation order:
         `concepts_brief.md` is not found, check for `discussion_summary.md` in
         `./discussion_summary.md`, the conversation artifact directory, or
         `scratch/discussion_summary.md`. If found, ingest and parse the summary.
-        **Do NOT** prompt the user to start `__SPECKIT_COMMAND_EGM_BRAINSTORM__` or warn of
-        deprecation.
+        **Do NOT** prompt the user to start
+        __SPECKIT_COMMAND_EGM_BRAINSTORM__ or warn of deprecation.
     *   **Priority 3: Interactive Chat Prompt**: If neither file exists, prompt
         the user in chat for the feature's problem statement, goals, and
-        technical context, or offer to launch `__SPECKIT_COMMAND_EGM_BRAINSTORM__`.
+        technical context, or suggest that the user run
+        __SPECKIT_COMMAND_EGM_BRAINSTORM__.
 3.  **Verify State**: Parse the document. Present a quick confirmation to the
     user to ensure we are starting with the correct context.
 4.  **Consensus**: Get explicit approval to start drafting the document.
+5.  **Resolve Author**: Use the `Author` from the ingested brief if it has one.
+    Otherwise use `git config user.name`, then `GIT_AUTHOR_NAME`. If neither is
+    set, prompt the user in chat. Record it in the document header.
 
 ### Step 2: Draft Overview, Goals & Problem Statement
 
@@ -160,7 +171,7 @@ this strict generation order:
     problem and user pain points.
 2.  **Draft Content**: Write "The Problem", "Overview", "Goals", and "Non-Goals"
     in clear, plain English Markdown following the design document template
-    (`references/design_doc.md`).
+    (`.specify/extensions/egm/references/design_doc.md`).
 3.  **Focus**: Emphasize the *why* (the user need and business value) rather
     than the *how* (technical implementation).
 4.  **Write Draft Artifact (MANDATORY)**: Save this initial draft to
@@ -189,12 +200,17 @@ this strict generation order:
 
 ### Step 4: Draft Alternatives
 
-1.  **Review Alternatives**: Recall the alternatives debated and rejected during
-    brainstorming.
+1.  **Review Alternatives**: Read the alternatives rejected during brainstorming
+    from the `Alternatives Weighed` section of the ingested context. Do not
+    rely on memory: drafting often runs in a new session. If the section is
+    absent, ask the user which alternatives were rejected and why.
 2.  **Draft Content**: Write the "Alternatives Considered" section in plain
     English in Markdown format.
 3.  **Detail Reasons**: For each alternative, explicitly state *why* it was
     rejected (e.g., higher latency, scaling limitations, team unfamiliarity).
+    Document author decisions as `Rejected by author: [technical rationale]`.
+    Do NOT state `Rejected by maintainer` unless quoting an upstream maintainer
+    issue, discussion, or PR URL.
 4.  **Update Draft Artifact (MANDATORY)**: Update `design_draft.md` to
     append/insert the "Alternatives Considered" section using your file-writing
     tool.
@@ -238,7 +254,28 @@ any impactful decisions. Follow these guidelines:
 When you are asked to write or save the design document, follow these rules
 strictly:
 
-1.  **Target Directory**: If the user specified a target directory or file, use
+1.  **Reconcile against the Predecessor Context**: Do not grade the draft
+    against the Zoom Out standard here. The session that wrote the draft agrees
+    with it; the separate EGM review workflow runs that check from a fresh
+    context when available.
+    Instead, re-read the context ingested at Step 1 and compare it with the
+    draft. No Goldfish can do this check, because no Goldfish reads the brief.
+    *   **Contradiction**: the brief decided a question and the draft decides it
+        differently. Report every one.
+    *   **Addition**: the draft decides a question the brief did not raise.
+        Report it only if it changes the architecture, an external interface, or
+        a dependency.
+
+    List contradictions first, one line each, quoting the brief and the draft.
+    Ask the user to decide each one. Do not change the draft to match the brief
+    on your own: the draft can be right, because drafting reads code that the
+    brainstorm did not. If nothing diverges, say so in one line. If Step 1
+    found no predecessor file, skip this step.
+
+    If a contradiction is open, stop and wait for the user. Apply each
+    decision to `design_draft.md` before Step 6.2.
+
+2.  **Target Directory**: If the user specified a target directory or file, use
     it. Otherwise, probe the workspace for existing design directories (from
     `Context File` directory, `docs/designs/`, or `<project>/docs/designs/`),
     bind `[DiscoveredPath]` (defaulting to `docs/designs/`), and present a
@@ -267,30 +304,18 @@ strictly:
         `"Please specify the custom target directory path where you would like
         to save the design document."` and yield active execution.
 
-2.  **Update Sitemap**: If `<DESIGN_DIR>/SITEMAP.md` exists, register the new
+3.  **Update Sitemap**: If `<DESIGN_DIR>/SITEMAP.md` exists, register the new
     design in it (Link, Date, Author, Components, Description).
-
-3.  **Self-Evaluate against Zoom Out Standard**: Before saving the file,
-    self-evaluate the compiled design document (contents of `design_draft.md`)
-    against the EGM Zoom Out Standard
-    (`resources/document_standards/zoom-out-standard.md`).
-    Verify that the design remains focused on the root problem, does not
-    introduce premature optimizations or speculative logic (YAGNI), maximizes
-    reuse, and avoids repeating itself. If any issues are found, present them to
-    the user, explain the proposed improvements, and ask for confirmation before
-    refining the draft.
 
 4.  **Write doc**: Once finalized, write the contents of `design_draft.md` to
     the designated destination file at `<DESIGN_DIR>/<FEATURE>.md` using your
-    file-writing tool. Follow the [template](references/design_doc.md) for final
+    file-writing tool. Follow the
+    [template](.specify/extensions/egm/references/design_doc.md) for final
     structure if any adjustments are needed.
 
 5.  **Clean Formatting**: Ensure clean standard Markdown formatting, valid table
     syntax, and proper code block fences.
 
 6.  **Handoff**: Provide a clickable link to the finalized design and recommend
-    that the user review the document with:
-
-    ```markdown
-    `__SPECKIT_COMMAND_EGM_REVIEW__` <DESIGN_PATH>
-    ```
+    that the user review `<DESIGN_PATH>` with the EGM review workflow when it
+    is available.

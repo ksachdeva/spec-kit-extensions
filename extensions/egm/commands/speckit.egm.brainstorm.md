@@ -7,13 +7,13 @@ description: >-
   egm-draft.
 ---
 
-# EGM Brainstorm: Interactive Multi-Lens Ideation & Refinement
-
 ## User Input
 
 ```text
 $ARGUMENTS
 ```
+
+# EGM Brainstorm: Interactive Multi-Lens Ideation & Refinement
 
 ## Overview
 
@@ -21,22 +21,19 @@ This skill acts as the upstream conversational brainstorming engine for the
 Elephant-Goldfish Model (EGM). It turns "half-baked" or raw concepts into
 hypotheses by combining **interactive clarifying questions** with an automated
 **Goldfish review**. The outcome is an iteratively refined RFC summary
-(`concepts_brief.md`) that leads directly into __SPECKIT_COMMAND_EGM_DRAFT__ or review with
-peers.
+(`concepts_brief.md`) that leads directly into
+__SPECKIT_COMMAND_EGM_DRAFT__ or review with peers.
 
 ## Delegation
 
-A Goldfish runs in a fresh context with no conversation history.
-
-Each subagent is defined in `agents/<file>.md`, and its
-frontmatter `name` (for example `egm-zoom-out`) is the subagent type to request
-where your harness registers named subagents. Otherwise spawn a general-purpose
-subagent and tell it to read that persona file first. Pass the prompt verbatim
-and wait for the report.
-
-> If your harness cannot nest subagents, use direct dispatch instead of the `synthesizer`.
-
-> If your harness has no subagent tool, stop and tell the user: a review in the same context is not a Goldfish review.
+A Goldfish runs in a fresh context with no conversation history. Each persona is
+defined in `.specify/extensions/egm/agents/<file>.md`. Use the harness's
+subagent capability to request the named persona when available; otherwise,
+spawn a general-purpose subagent and tell it to read the persona file first.
+Pass the prompt verbatim and wait for the report. If the harness cannot nest
+subagents, use direct dispatch instead of the synthesizer. If the harness has
+no subagent capability, stop and tell the user: a review in the same context
+is not a Goldfish review.
 
 ## Execution Constraints (CRITICAL)
 
@@ -94,55 +91,22 @@ and wait for the report.
 
 | Lens / Persona          | Core Objective          | Key Questions Challenged |
 | :---------------------- | :---------------------- | :----------------------- |
-| **Contrarian / YAGNI**  | Code & complexity       | *Why does this feature   |
-:                         : minimization            : need to exist? Can an    :
-:                         :                         : existing library,        :
-:                         :                         : open-source dependency,  :
-:                         :                         : API, or service solve    :
-:                         :                         : 90% of this problem      :
-:                         :                         : without writing new      :
-:                         :                         : code?*                   :
-| **Cost, Quota & Token   | Infrastructure & budget | *What is the peak QPS,   |
-: Economics**             : scaling                 : memory footprint,        :
-:                         :                         : database query load, or  :
-:                         :                         : LLM token budget? Will   :
-:                         :                         : this hit quota ceilings  :
-:                         :                         : at scale?*               :
-| **UX & Developer        | Usability & cognitive   | *Is the API/CLI          |
-: Ergonomics**            : overhead                : intuitive? Does it match :
-:                         :                         : ecosystem conventions?   :
-:                         :                         : Are error messages       :
-:                         :                         : actionable, or does it   :
-:                         :                         : add developer friction?* :
-| **Migration & Backward  | Rollout safety &        | *How do existing         |
-: Compatibility**         : version skew            : clients/data migrate?    :
-:                         :                         : Does this break          :
-:                         :                         : serialized schemas,      :
-:                         :                         : protos, or persistent    :
-:                         :                         : storage? How is rollback :
-:                         :                         : handled mid-migration?*  :
-| **Observability & SRE   | Telemetry & operational | *Are key operations      |
-: Debuggability**         : visibility              : traceable via            :
-:                         :                         : distributed tracing? Are :
-:                         :                         : telemetry metrics        :
-:                         :                         : actionable? How will     :
-:                         :                         : oncall engineers triage  :
-:                         :                         : a production incident at :
-:                         :                         : 3 AM?*                   :
-| **Long-Term Tech Debt & | Future maintainability  | *Does this introduce     |
-: Maintenance**           :                         : tightly coupled          :
-:                         :                         : dependencies or brittle  :
-:                         :                         : state machines that will :
-:                         :                         : be painful to maintain   :
-:                         :                         : in 2 years?*             :
+| **Contrarian / YAGNI** | Code & complexity minimization | *Why does this feature need to exist? Can an existing library, open-source dependency, API, or service solve 90% of this problem without writing new code?* |
+| **Cost, Quota & Token Economics** | Infrastructure & budget scaling | *What is the peak QPS, memory footprint, database query load, or LLM token budget? Will this hit quota ceilings at scale?* |
+| **UX & Developer Ergonomics** | Usability & cognitive overhead | *Is the API/CLI intuitive? Does it match ecosystem conventions? Are error messages actionable, or does it add developer friction?* |
+| **Migration & Backward Compatibility** | Rollout safety & version skew | *How do existing clients/data migrate? Does this break serialized schemas, protos, or persistent storage? How is rollback handled mid-migration?* |
+| **Observability & SRE Debuggability** | Telemetry & operational visibility | *Are key operations traceable via distributed tracing? Are telemetry metrics actionable? How will oncall engineers triage a production incident at 3 AM?* |
+| **Long-Term Tech Debt & Maintenance** | Future maintainability | *Does this introduce tightly coupled dependencies or brittle state machines that will be painful to maintain in 2 years?* |
+| **Inventive Catalyst** | Contradiction elimination & inventive transforms | *What fundamental trade-off is this design accepting as inevitable? How can we resolve this conflict using proven software transforms to achieve the Ideal Final Result without compromise?* |
 
 ## Execution Workflow
 
 ### Step 1: Deep Clarification & Problem Statement Drilling
 
-1.  **Check for Concept Foundation**: Verify if the user provided an initial
+1.  **Check for Concept Foundation & Author Identity**: Verify if the user provided an initial
     feature idea or concept prompt. If missing, prompt the user to describe what
-    they want to brainstorm.
+    they want to brainstorm. Resolve the brief's `Author` from `git config user.name`,
+    then `GIT_AUTHOR_NAME`; if neither is set, ask in chat.
 2.  **Iterative Problem Drilling (Multi-Turn Chat)**: Do **NOT** rush into
     launching subagents after a single response. Continue asking targeted,
     open-ended clarifying questions across multiple chat turns as needed until
@@ -196,17 +160,18 @@ and wait for the report.
 ### Step 2: Goldfish Review & Synthesis
 
 1.  **Delegate to Synthesizer Subagent**: Spawn the intermediate
-    **`egm-synthesizer`** agent (or parallel Goldfish subagents across the 6
+    **`egm-synthesizer`** agent (or parallel Goldfish subagents across the 7
     specialized lenses if your harness cannot nest subagents):
-    *   Subagent: `egm-synthesizer` (`agents/synthesizer.md`)
+    *   Subagent: `egm-synthesizer` (`.specify/extensions/egm/agents/synthesizer.md`)
     *   `Prompt`: >- Conduct multi-lens brainstorm for feature concept:
         `[AnchoredFeatureHypothesis]`. Mode: `BRAINSTORM`. Reviewers:
         `[egm-design, egm-codebase-details, egm-zoom-out, egm-comprehension,
-        egm-implementation-readiness, egm-structural]`.
+        egm-implementation-readiness, egm-structural, egm-inventive-catalyst]`.
 2.  **Synthesizer Execution**: The `egm-synthesizer` subagent launches the
     parallel Goldfish reviewers across the specialized lenses (`egm-design`,
     `egm-codebase-details`, `egm-zoom-out`, `egm-comprehension`,
-    `egm-implementation-readiness`, `egm-structural`) with `Mode: BRAINSTORM`.
+    `egm-implementation-readiness`, `egm-structural`,
+    `egm-inventive-catalyst`) with `Mode: BRAINSTORM`.
 3.  **Deduplication**: Collect the raw findings from the Goldfish reviewers,
     deduplicate overlapping points, and format them into a cohesive analysis.
 4.  **Write/Update Artifact**: Format and write the synthesized brief to
@@ -227,12 +192,21 @@ The `concepts_brief.md` artifact follows this structure:
 
 ## Analysis
 
-[Cohesive analysis found by review lenses written in plain English.]
+[Cohesive analysis found by review lenses written in plain English, covering
+inventive contradictions, suggested catalog patterns, secondary trade-offs,
+and the Ideal Final Result.]
 
 ## Goals vs. Non-Goals
 
 * **In-Scope Goals:** [Explicitly defined scope items]
 * **Out-of-Scope Non-Goals:** [Features intentionally excluded]
+
+## Alternatives Weighed
+
+[Each option rejected during ideation, with the technical reason (e.g.
+"Rejected by author: <reason>"). Do not attribute a rejection to a maintainer
+without linking their issue, discussion, or PR. __SPECKIT_COMMAND_EGM_DRAFT__
+copies these into Alternatives Considered and has no other source for them.]
 
 ## Key Decisions & Staging for Next Steps
 
@@ -264,7 +238,7 @@ The `concepts_brief.md` artifact follows this structure:
           "question": "Brainstorming complete. concepts_brief.md is finalized. Select next step:",
           "options": [
             "Publish concepts_brief.md as RFC for team feedback",
-            "Proceed to __SPECKIT_COMMAND_EGM_DRAFT__ (Initialize formal design document)",
+            "Proceed to egm-draft (Initialize formal design document)",
             "Continue refining concepts_brief.md in ideation mode",
             "Conclude brainstorming and keep brief for later"
           ],
@@ -281,14 +255,15 @@ The `concepts_brief.md` artifact follows this structure:
         *   Notify the user in chat that the RFC has been published and can be
             shared with the team for feedback before formal drafting. Remind the
             user that once feedback is gathered, a detailed design can be
-            initiated by running `__SPECKIT_COMMAND_EGM_DRAFT__ docs/designs/<feature_name>.md`.
-    *   **Option 1: `Proceed to /egm-draft (Initialize formal design
+            initiated by running __SPECKIT_COMMAND_EGM_DRAFT__ with
+            `docs/designs/<feature_name>.md` as its input.
+    *   **Option 1: `Proceed to egm-draft (Initialize formal design
         document)`**:
         *   Confirm that `concepts_brief.md` is saved in the working directory
             or artifact directory.
-        *   Instruct the user to run __SPECKIT_COMMAND_EGM_DRAFT__ (or activate the `egm-draft`
-            skill), noting that __SPECKIT_COMMAND_EGM_DRAFT__ automatically ingests
-            `concepts_brief.md` as its Priority 1 intake source.
+        *   Instruct the user to run __SPECKIT_COMMAND_EGM_DRAFT__, noting that
+            it automatically ingests `concepts_brief.md` as its Priority 1
+            intake source.
     *   **Option 2: `Continue refining concepts_brief.md in ideation mode`**:
         *   Return to Step 3 iteration loop to drill into further edge cases or
             update the brief based on user chat input.

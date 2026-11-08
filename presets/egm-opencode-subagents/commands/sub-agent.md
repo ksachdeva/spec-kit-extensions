@@ -8,8 +8,9 @@ Read `.specify/extensions/egm/agents/<file>.md` where <file> will be replaced by
 | --- | --- |
 | egm-codebase-details | codebase_details |
 | egm-comprehension | comprehension |
-| egm-design-critic | design_critic |
+| egm-design | design_critic |
 | egm-implementation-readiness | implementation_readiness |
+| egm-inventive-catalyst | inventive_catalyst |
 | egm-structural | structural |
 | egm-style | style |
 | egm-synthesizer | synthesizer |
