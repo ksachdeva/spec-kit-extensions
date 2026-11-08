@@ -94,7 +94,7 @@ this strict generation order:
 1.  **Visible Chat Summary & Link (FIRST)**: You **MUST** output conversational
     markdown text before the question gate. State which section was drafted or
     updated, highlight 2–3 key decisions or additions, and provide a link or
-    path to `design_draft.md`.
+    link or path to `design_draft.md`.
 2.  **Approval Gate (SECOND)**: In the same turn, present the single-select
     approval choice (using a structured question tool such as `ask_question`
     with `len(questions) == 1` and `is_multi_select: false` if your harness has
@@ -256,8 +256,8 @@ strictly:
 
 1.  **Reconcile against the Predecessor Context**: Do not grade the draft
     against the Zoom Out standard here. The session that wrote the draft agrees
-    with it; the separate EGM review workflow runs that check from a fresh
-    context when available.
+    with it; `__SPECKIT_COMMAND_EGM_REVIEW__` Stage 5 runs that check from a
+    fresh context.
     Instead, re-read the context ingested at Step 1 and compare it with the
     draft. No Goldfish can do this check, because no Goldfish reads the brief.
     *   **Contradiction**: the brief decided a question and the draft decides it
@@ -317,5 +317,5 @@ strictly:
     syntax, and proper code block fences.
 
 6.  **Handoff**: Provide a clickable link to the finalized design and recommend
-    that the user review `<DESIGN_PATH>` with the EGM review workflow when it
-    is available.
+    that the user review it by running `__SPECKIT_COMMAND_EGM_REVIEW__` on
+    `<DESIGN_PATH>`.

@@ -26,14 +26,15 @@ __SPECKIT_COMMAND_EGM_DRAFT__ or review with peers.
 
 ## Delegation
 
-A Goldfish runs in a fresh context with no conversation history. Each persona is
-defined in `.specify/extensions/egm/agents/<file>.md`. Use the harness's
-subagent capability to request the named persona when available; otherwise,
-spawn a general-purpose subagent and tell it to read the persona file first.
-Pass the prompt verbatim and wait for the report. If the harness cannot nest
-subagents, use direct dispatch instead of the synthesizer. If the harness has
-no subagent capability, stop and tell the user: a review in the same context
-is not a Goldfish review.
+A Goldfish runs in a fresh context with no conversation history. Spawn each
+subagent with your harness's subagent tool. Each subagent is defined in
+`.specify/extensions/egm/agents/<file>.md`, and its frontmatter `name` (for
+example `egm-zoom-out`) is the subagent type to request where your harness
+registers named subagents. Otherwise spawn a general-purpose subagent and tell
+it to read that persona file first. Pass the prompt verbatim and wait for the
+report. If your harness cannot nest subagents, use direct dispatch instead of
+the synthesizer. If your harness has no subagent tool, stop and tell the user:
+a review in the same context is not a Goldfish review.
 
 ## Execution Constraints (CRITICAL)
 
@@ -255,8 +256,8 @@ copies these into Alternatives Considered and has no other source for them.]
         *   Notify the user in chat that the RFC has been published and can be
             shared with the team for feedback before formal drafting. Remind the
             user that once feedback is gathered, a detailed design can be
-            initiated by running __SPECKIT_COMMAND_EGM_DRAFT__ with
-            `docs/designs/<feature_name>.md` as its input.
+            initiated by starting __SPECKIT_COMMAND_EGM_DRAFT__ on
+            `docs/designs/<feature_name>.md`.
     *   **Option 1: `Proceed to egm-draft (Initialize formal design
         document)`**:
         *   Confirm that `concepts_brief.md` is saved in the working directory

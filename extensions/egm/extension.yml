@@ -3,7 +3,7 @@ schema_version: "1.0"
 extension:
   id: egm
   name: "Elephant-Goldfish Model"
-  version: "1.5.0"
+  version: "1.5.1"
   description: "Design with an elephant. Review with a goldfish."
   category: "process"
   effect: "read-write"
