@@ -21,19 +21,22 @@ This skill acts as the upstream conversational brainstorming engine for the
 Elephant-Goldfish Model (EGM). It turns "half-baked" or raw concepts into
 hypotheses by combining **interactive clarifying questions** with an automated
 **Goldfish review**. The outcome is an iteratively refined RFC summary
-(`concepts_brief.md`) that leads directly into `/egm-draft` or review with
+(`concepts_brief.md`) that leads directly into __SPECKIT_COMMAND_EGM_DRAFT__ or review with
 peers.
 
 ## Delegation
 
-A Goldfish runs in a fresh context with no conversation history. Spawn each
-subagent with your harness's subagent tool (Antigravity: `invoke_subagent`; Claude Code: `Agent`; Codex: `spawn_agent`). Each subagent is defined in `agents/<file>.md`, and its
+A Goldfish runs in a fresh context with no conversation history.
+
+Each subagent is defined in `agents/<file>.md`, and its
 frontmatter `name` (for example `egm-zoom-out`) is the subagent type to request
 where your harness registers named subagents. Otherwise spawn a general-purpose
 subagent and tell it to read that persona file first. Pass the prompt verbatim
-and wait for the report. If your harness cannot nest subagents,
-use direct dispatch instead of the synthesizer. See `docs/harnesses.md`.
-If your harness has no subagent tool, stop and tell the user: a review in the same context is not a Goldfish review.
+and wait for the report.
+
+> If your harness cannot nest subagents, use direct dispatch instead of the `synthesizer`.
+
+> If your harness has no subagent tool, stop and tell the user: a review in the same context is not a Goldfish review.
 
 ## Execution Constraints (CRITICAL)
 
@@ -233,7 +236,7 @@ The `concepts_brief.md` artifact follows this structure:
 
 ## Key Decisions & Staging for Next Steps
 
-[Key decisions resolved during ideation to be carried forward into `/egm-draft`.]
+[Key decisions resolved during ideation to be carried forward into __SPECKIT_COMMAND_EGM_DRAFT__.]
 ```
 
 ### Step 3: Interactive Iteration & Refinement Loop
@@ -261,7 +264,7 @@ The `concepts_brief.md` artifact follows this structure:
           "question": "Brainstorming complete. concepts_brief.md is finalized. Select next step:",
           "options": [
             "Publish concepts_brief.md as RFC for team feedback",
-            "Proceed to /egm-draft (Initialize formal design document)",
+            "Proceed to __SPECKIT_COMMAND_EGM_DRAFT__ (Initialize formal design document)",
             "Continue refining concepts_brief.md in ideation mode",
             "Conclude brainstorming and keep brief for later"
           ],
@@ -278,13 +281,13 @@ The `concepts_brief.md` artifact follows this structure:
         *   Notify the user in chat that the RFC has been published and can be
             shared with the team for feedback before formal drafting. Remind the
             user that once feedback is gathered, a detailed design can be
-            initiated by running `/egm-draft docs/designs/<feature_name>.md`.
+            initiated by running `__SPECKIT_COMMAND_EGM_DRAFT__ docs/designs/<feature_name>.md`.
     *   **Option 1: `Proceed to /egm-draft (Initialize formal design
         document)`**:
         *   Confirm that `concepts_brief.md` is saved in the working directory
             or artifact directory.
-        *   Instruct the user to run `/egm-draft` (or activate the `egm-draft`
-            skill), noting that `/egm-draft` automatically ingests
+        *   Instruct the user to run __SPECKIT_COMMAND_EGM_DRAFT__ (or activate the `egm-draft`
+            skill), noting that __SPECKIT_COMMAND_EGM_DRAFT__ automatically ingests
             `concepts_brief.md` as its Priority 1 intake source.
     *   **Option 2: `Continue refining concepts_brief.md in ideation mode`**:
         *   Return to Step 3 iteration loop to drill into further edge cases or

@@ -145,11 +145,11 @@ this strict generation order:
         `concepts_brief.md` is not found, check for `discussion_summary.md` in
         `./discussion_summary.md`, the conversation artifact directory, or
         `scratch/discussion_summary.md`. If found, ingest and parse the summary.
-        **Do NOT** prompt the user to start `/egm-brainstorm` or warn of
+        **Do NOT** prompt the user to start `__SPECKIT_COMMAND_EGM_BRAINSTORM__` or warn of
         deprecation.
     *   **Priority 3: Interactive Chat Prompt**: If neither file exists, prompt
         the user in chat for the feature's problem statement, goals, and
-        technical context, or offer to launch `/egm-brainstorm`.
+        technical context, or offer to launch `__SPECKIT_COMMAND_EGM_BRAINSTORM__`.
 3.  **Verify State**: Parse the document. Present a quick confirmation to the
     user to ensure we are starting with the correct context.
 4.  **Consensus**: Get explicit approval to start drafting the document.
@@ -292,5 +292,5 @@ strictly:
     that the user review the document with:
 
     ```markdown
-    `egm-review` <DESIGN_PATH>
+    `__SPECKIT_COMMAND_EGM_REVIEW__` <DESIGN_PATH>
     ```
