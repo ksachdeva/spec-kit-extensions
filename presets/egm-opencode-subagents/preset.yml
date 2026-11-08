@@ -3,7 +3,7 @@ schema_version: "1.0"
 preset:
   id: "egm-opencode-subagents"
   name: "EGM OpenCode Sub-Agent Delegation"
-  version: "1.3.0"
+  version: "0.5.0"
   description: "Adds sub-agent delegation instructions to EGM Spec Kit workflow commands, enabling parallel execution of independent steps via OpenCode sub-agents."
   author: "Kapil Sachdeva"
   repository: "https://github.com/ksachdeva/spec-kit-extensions"
@@ -13,7 +13,7 @@ requires:
   speckit_version: ">=0.8.0"
   extensions:
     - id: egm
-      version: ">=1.5.0"
+      version: ">=0.9.0"
       required: true
 
 provides:

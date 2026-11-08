@@ -2,6 +2,22 @@
 fmt = "uv format --preview-features format"
 pre-commit = "uv run pre-commit run --all--files"
 
+[tool.poe.tasks.release-extension]
+script = "scripts.release_component:release_extension(extension, version, _dry_run)"
+help = "Tag and publish one extension release"
+args = [
+    { name = "extension", positional = true, help = "Extension ID under extensions/" },
+    { name = "version", positional = true, help = "Version already set in extension.yml" },
+]
+
+[tool.poe.tasks.release-preset]
+script = "scripts.release_component:release_preset(preset, version, _dry_run)"
+help = "Tag and publish one preset release"
+args = [
+    { name = "preset", positional = true, help = "Preset ID under presets/" },
+    { name = "version", positional = true, help = "Version already set in preset.yml" },
+]
+
 [tool.poe.groups.opencode]
 heading = "SpecKit Opencode"
 

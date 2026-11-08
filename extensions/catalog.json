@@ -6,7 +6,7 @@
     "egm": {
       "name": "Elephant-Goldfish Model",
       "id": "egm",
-      "version": "1.5.1",
+      "version": "0.9.0",
       "description": "Design with an elephant. Review with a goldfish.",
       "author": "Kapil Sachdeva",
       "repository": "https://github.com/ksachdeva/spec-kit-egm",
