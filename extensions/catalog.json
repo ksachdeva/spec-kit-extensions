@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-11-08T01:59:38Z",
+  "catalog_url": "https://raw.githubusercontent.com/ksachdeva/spec-kit-extensions/main/extensions/catalog.json",
+  "extensions": {
+    "egm": {
+      "name": "Elephant-Goldfish Model",
+      "id": "egm",
+      "version": "1.5.1",
+      "description": "Design with an elephant. Review with a goldfish.",
+      "author": "Kapil Sachdeva",
+      "repository": "https://github.com/ksachdeva/spec-kit-egm",
+      "tags": [
+        "assessment",
+        "discovery",
+        "triage",
+        "product",
+        "workflow"
+      ]
+    }
+  }
+}
