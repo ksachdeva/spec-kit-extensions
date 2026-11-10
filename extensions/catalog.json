@@ -7,6 +7,8 @@
       "name": "Elephant-Goldfish Model",
       "id": "egm",
       "version": "0.9.0",
+      "download_url": "https://github.com/ksachdeva/spec-kit-extensions/releases/download/extension-egm-v0.9.0/extension-egm-0.9.0.zip",
+      "sha256": "2b0d1997c9ebc5b21433cd3f78deedd9b113a1b3ed69f4bc58c16010b41c8641",
       "description": "Design with an elephant. Review with a goldfish.",
       "author": "Kapil Sachdeva",
       "repository": "https://github.com/ksachdeva/spec-kit-extensions",
