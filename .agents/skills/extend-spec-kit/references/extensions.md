@@ -259,7 +259,8 @@ not have a separately versioned Python plugin API.
 ## Release and Distribution
 
 For public distribution, include a user-facing README, license, and versioned
-release archive. Test both a local development install and an archive install.
+release archive. Test local development, direct archive, and install-enabled
+catalog installs.
 For example, after publishing a pinned release archive:
 
 ```bash
@@ -269,12 +270,27 @@ specify extension add my-extension --from \
 
 The requested extension ID must match the archive manifest. Direct archive
 installation requires an explicit user trust decision; HTTPS is required
-except for loopback development servers. For repeated team use, publish a
-catalog you control and configure it as an install-enabled source only after
-reviewing its contents.
+except for loopback development servers. For install-by-ID and repeatable team
+use, publish a catalog you control with each extension's current version and
+`download_url` (and preferably its SHA-256 digest), then register it in the
+project:
+
+```bash
+specify extension catalog add https://example.invalid/extensions/catalog.json \
+   --name team-extensions --install-allowed
+specify extension add my-extension
+```
+
+The catalog URL must use HTTPS. `--install-allowed` explicitly trusts that
+catalog as an installation source; use it only for a catalog you control and
+have reviewed. Without that flag, the catalog is discovery-only. Catalog
+entries need a downloadable release archive to support installation. Historical
+release records also require a SHA-256 digest.
 
 Use a pinned release tag and update the extension version for every content
-release; installed copies use versions to discover updates. Community catalog
+release; installed copies use versions to discover updates. Update the
+catalog's download URL and digest with each release, and verify the digest
+against the published archive. Community catalog
 submissions use the Extension Submission issue flow; maintainers validate
 listing metadata and package shape, not extension behavior. Do not edit the
 community catalog directly. For teams, publish a catalog you control and vet;

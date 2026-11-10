@@ -106,9 +106,34 @@ is remove-then-add and is not transactional; test with disposable project data.
 
 Include a preset-scoped README, license, compatibility range, and versioned
 release archive. The README should say what changes, when to use/not use the
-preset, and include a valid `specify preset add ...` example. Community
-publication uses the Preset Submission issue flow; do not directly edit the
-community catalog. Community listings are discovery metadata, not code review.
+preset, and include valid direct-archive and catalog install examples. A direct
+archive install uses:
+
+```bash
+specify preset add my-preset --from \
+  https://example.invalid/releases/download/preset-my-preset-v1.0.0/preset-my-preset-1.0.0.zip
+```
+
+For install-by-ID, publish a catalog you control with the preset's current
+version and `download_url` (and preferably its SHA-256 digest), then register
+it in the project:
+
+```bash
+specify preset catalog add https://example.invalid/presets/catalog.json \
+  --name team-presets --install-allowed
+specify preset add my-preset
+```
+
+The catalog URL must use HTTPS. `--install-allowed` explicitly trusts that
+catalog as an installation source; use it only for a catalog you control and
+have reviewed. Without that flag, the catalog is discovery-only. Catalog
+entries need a downloadable release archive to support installation. Historical
+release records also require a SHA-256 digest. Update the catalog's download
+URL and digest with each release, and verify the digest against the published
+archive. Test local development, direct archive, and install-enabled catalog
+installs. Community publication uses the Preset Submission issue flow; do not
+directly edit the community catalog. Community listings are discovery metadata,
+not code review.
 
 ## Author Checklist
 
