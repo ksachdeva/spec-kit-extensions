@@ -57,7 +57,16 @@ def release_component(
             f"Manifest version {component.get('version')!r} does not match {version!r}"
         )
 
-    tag = f"{kind}-{component_id}-v{version}"
+    for other_kind, (other_root, other_manifest) in COMPONENTS.items():
+        if other_kind == kind:
+            continue
+        if (Path(other_root) / component_id / other_manifest).is_file():
+            raise SystemExit(
+                f"Component ID {component_id!r} is also used by a {other_kind}; "
+                "release IDs must be unique across extensions and presets."
+            )
+
+    tag = f"{component_id}-v{version}"
     if git("status", "--porcelain", "--untracked-files=all"):
         raise SystemExit("Commit or discard all working-tree changes before releasing.")
 
