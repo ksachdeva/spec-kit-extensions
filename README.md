@@ -42,7 +42,7 @@ specify preset add egm-opencode-subagents --from \
 ```
 
 It adds sub-agent delegation guidance to selected EGM commands and requires
-EGM `0.9.0` or newer.
+EGM `0.9.1` or newer.
 
 ## TODO
 
