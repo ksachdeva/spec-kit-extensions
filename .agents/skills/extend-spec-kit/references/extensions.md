@@ -299,6 +299,10 @@ or endorsement. Review a release archive before installing it: direct archive
 installation is executable project content, and catalog metadata is not
 security approval.
 
+In this repository, new extension releases use `<extension-id>-v<version>` tags
+and `<extension-id>-<version>.zip` assets. IDs must be unique across extensions
+and presets so a tag identifies exactly one package.
+
 ## Troubleshooting
 
 | Symptom | Checks |

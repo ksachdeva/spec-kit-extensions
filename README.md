@@ -7,7 +7,7 @@ published GitHub release:
 
 ```bash
 specify extension add egm --from \
-	https://github.com/ksachdeva/spec-kit-extensions/releases/download/extension-egm-v0.9.0/extension-egm-0.9.0.zip
+	https://github.com/ksachdeva/spec-kit-extensions/releases/download/egm-v0.9.1/egm-0.9.1.zip
 ```
 
 The EGM extension requires Spec Kit `0.9.0` or newer and provides the
@@ -38,7 +38,7 @@ first, then install the preset from its published GitHub release:
 
 ```bash
 specify preset add egm-opencode-subagents --from \
-	https://github.com/ksachdeva/spec-kit-extensions/releases/download/preset-egm-opencode-subagents-v0.5.0/preset-egm-opencode-subagents-0.5.0.zip
+	https://github.com/ksachdeva/spec-kit-extensions/releases/download/egm-opencode-subagents-v0.5.1/egm-opencode-subagents-0.5.1.zip
 ```
 
 It adds sub-agent delegation guidance to selected EGM commands and requires

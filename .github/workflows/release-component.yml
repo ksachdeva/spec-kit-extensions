@@ -3,8 +3,7 @@ name: Release Spec Kit component
 on:
   push:
     tags:
-      - "extension-*-v*"
-      - "preset-*-v*"
+      - "*-v*"
 
 permissions:
   contents: write
@@ -40,30 +39,38 @@ jobs:
           from pathspec import GitIgnoreSpec
 
           tag = os.environ["RELEASE_TAG"]
-          prefixes = {
-              "extension-": ("extension", "extensions", "extension.yml"),
-              "preset-": ("preset", "presets", "preset.yml"),
+          components = {
+              "extension": ("extensions", "extension.yml"),
+              "preset": ("presets", "preset.yml"),
           }
-          for prefix, (kind, package_root, manifest_name) in prefixes.items():
-              if tag.startswith(prefix):
-                  component_id, version = tag[len(prefix):].rsplit("-v", 1)
-                  break
-          else:
+          try:
+              component_id, version = tag.rsplit("-v", 1)
+          except ValueError as exc:
               raise SystemExit(
-                  f"Tag {tag!r} must begin with 'extension-' or 'preset-'"
-              )
+                  f"Tag {tag!r} must end with '-v<version>'"
+              ) from exc
 
           if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", component_id):
-              raise SystemExit(f"Invalid {kind} ID in tag: {component_id!r}")
+              raise SystemExit(f"Invalid component ID in tag: {component_id!r}")
           try:
               Version(version)
           except InvalidVersion as exc:
               raise SystemExit(f"Invalid PEP 440 version in tag: {version!r}") from exc
 
-          package_dir = Path(package_root) / component_id
-          manifest_path = package_dir / manifest_name
-          if not manifest_path.is_file():
-              raise SystemExit(f"No {kind} manifest found at {manifest_path}")
+          candidates = []
+          for kind, (package_root, manifest_name) in components.items():
+              package_dir = Path(package_root) / component_id
+              manifest_path = package_dir / manifest_name
+              if manifest_path.is_file():
+                  candidates.append((kind, package_dir, manifest_path, manifest_name))
+          if not candidates:
+              raise SystemExit(f"No component found for tag ID {component_id!r}")
+          if len(candidates) > 1:
+              raise SystemExit(
+                  f"Tag ID {component_id!r} is ambiguous; extension and preset "
+                  "IDs must be unique"
+              )
+          kind, package_dir, manifest_path, manifest_name = candidates[0]
 
           manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
           if not isinstance(manifest, dict) or not isinstance(manifest.get(kind), dict):
@@ -89,7 +96,7 @@ jobs:
 
           dist_dir = Path("dist")
           dist_dir.mkdir(exist_ok=True)
-          archive = dist_dir / f"{kind}-{component_id}-{version}.zip"
+          archive = dist_dir / f"{component_id}-{version}.zip"
           with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as output:
               for path in sorted(package_dir.rglob("*")):
                   if path.is_symlink():

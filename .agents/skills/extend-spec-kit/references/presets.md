@@ -111,8 +111,12 @@ archive install uses:
 
 ```bash
 specify preset add my-preset --from \
-  https://example.invalid/releases/download/preset-my-preset-v1.0.0/preset-my-preset-1.0.0.zip
+  https://example.invalid/releases/download/my-preset-v1.0.0/my-preset-1.0.0.zip
 ```
+
+In this repository, new preset releases use `<preset-id>-v<version>` tags and
+`<preset-id>-<version>.zip` assets. IDs must be unique across extensions and
+presets so a tag identifies exactly one package.
 
 For install-by-ID, publish a catalog you control with the preset's current
 version and `download_url` (and preferably its SHA-256 digest), then register
