@@ -6,8 +6,8 @@
     "egm-opencode-subagents": {
       "name": "EGM OpenCode Sub-Agent Delegation",
       "id": "egm-opencode-subagents",
-      "version": "0.5.0",
-      "download_url": "https://github.com/ksachdeva/spec-kit-extensions/releases/download/preset-egm-opencode-subagents-v0.5.0/preset-egm-opencode-subagents-0.5.0.zip",
+      "version": "0.5.1",
+      "download_url": "https://github.com/ksachdeva/spec-kit-extensions/releases/download/preset-egm-opencode-subagents-v0.5.1/preset-egm-opencode-subagents-0.5.1.zip",
       "sha256": "13bb7235d360bf8b5c09a6e4fd723d0be0d1144c9b2fab856d9bd1bdfa8ec498",
       "description": "Adds sub-agent delegation instructions to EGM Spec Kit workflow commands, enabling parallel execution of independent steps via OpenCode sub-agents.",
       "author": "Kapil Sachdeva",
@@ -23,7 +23,7 @@
         "extensions": [
           {
             "id": "egm",
-            "version": ">=0.9.0",
+            "version": ">=0.9.1",
             "required": true
           }
         ]
